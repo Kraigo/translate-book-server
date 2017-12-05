@@ -1,0 +1,5 @@
+.custom-file-control {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
