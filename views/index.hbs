@@ -37,10 +37,6 @@
                         </div>
                     </div>
 
-                    <div class="progress js-on-loading" style="display: none">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                    </div>
-
                 </form>
             </div>
         </div>
@@ -49,49 +45,6 @@
 
 <script>
     $(function() {
-        $('form').bind('submit', function(e) {
-            e.preventDefault();
-            toggleLoading();
-            var $form = $(this);
-            var $rate = $("#rate");
-            var $bookFile = $("#bookFile");
-            var file = $bookFile.prop('files')[0];
-            var fd = new FormData();
-            fd.append('bookFile', file);
-            fd.append('rate', $rate.val());
-
-            $.ajax({
-                url: $form.attr('action'),
-                data: fd,
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                success: function (data) {
-                    downloadFile(data, file.name);
-                    $bookFile.val('').trigger('change');
-                    toggleLoading();
-                },
-                error: function(err) {
-                    alert(err.responseText);
-                    $bookFile.val('').trigger('change');
-                    toggleLoading();
-                }
-            });
-        })
-
-        function downloadFile(data, filename) {
-            var a = window.document.createElement('a');
-            a.href = window.URL.createObjectURL(new Blob([data], {type: 'application/octet-stream'}));
-            a.download = filename.replace(/(.*?)\.(\w+)$/, '$1_EnRu.$2');
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-
-        function toggleLoading() {
-            $('.js-on-loading').toggle();
-        }
-
         $('.custom-file-input').bind('change', function() { 
             var $this = $(this);
             var $control = $this.next('.custom-file-control')          
